@@ -51,12 +51,9 @@ python scripts/train.py
 
 By default this will train a model on Zara1, periodically saving checkpoint files checkpoint_with_model.pt and checkpoint_no_model.pt to the current working directory. The training script has a number of command-line flags that you can use to configure the model architecture, hyperparameters, and input / output settings:
 
-## Running Models
-You can use the script `scripts/evaluate_model.py` to easily run any of the pretrained models on any of the datsets. For example you can replicate the Table 1 results for all datasets for SGAN-20V-20 like this:
-
+IF you want to evaluate on pretrained model then refer to this link-
 ```bash
-python scripts/evaluate_model.py \
-  --model_path models/sgan-models
+https://github.com/agrimgupta92/sgan
 ```
 
 
