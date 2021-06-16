@@ -23,7 +23,9 @@ Our model consists of three key components: Generator (G), Pooling Module (PM) a
 ## Setup
 All code was developed and tested on window 10 with Python 3.9.5 and PyTorch 1.9 (cuda 11.1).
 command to install torch dependencies. 
+```bash
 pip3 install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio===0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
 
 other dependencies are attrdict,numpy,Pillow and six.
 
