@@ -12,25 +12,6 @@ This is the code for the paper
 <br>
 Presented at [CVPR 2018](http://cvpr2018.thecvf.com/)
 
-Human motion is interpersonal, multimodal and follows social conventions. In this paper, we tackle this problem by combining tools from sequence prediction and generative adversarial networks: a recurrent sequence-to-sequence model observes motion histories and predicts future behavior, using a novel pooling mechanism to aggregate information across
-people.
-
-Below we show an examples of socially acceptable predictions made by our model in complex scenarios. Each person is denoted by a different color. We denote observed trajectory by dots and predicted trajectory by stars.
-<div align='center'>
-<img src="images/2.gif"></img>
-<img src="images/3.gif"></img>
-</div>
-
-If you find this code useful in your research then please cite
-```
-@inproceedings{gupta2018social,
-  title={Social GAN: Socially Acceptable Trajectories with Generative Adversarial Networks},
-  author={Gupta, Agrim and Johnson, Justin and Fei-Fei, Li and Savarese, Silvio and Alahi, Alexandre},
-  booktitle={IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-  number={CONF},
-  year={2018}
-}
-```
 
 ## Model
 Our model consists of three key components: Generator (G), Pooling Module (PM) and Discriminator (D). G is based on encoder-decoder framework where we link the hidden states of encoder and decoder via PM. G takes as input trajectories of all people involved in a scene and outputs corresponding predicted trajectories. D inputs the entire sequence comprising both input trajectory and future prediction and classifies them as “real/fake”.
@@ -40,26 +21,35 @@ Our model consists of three key components: Generator (G), Pooling Module (PM) a
 </div>
 
 ## Setup
-All code was developed and tested on Ubuntu 16.04 with Python 3.5 and PyTorch 0.4.
+All code was developed and tested on window 10 with Python 3.9.5 and PyTorch 1.9 (cuda 11.1).
+command to install torch dependencies. 
+pip3 install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio===0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
-You can setup a virtual environment to run the code like this:
+other dependencies are attrdict,numpy,Pillow and six.
+
+You can train your own model by following these instructions:
+
+Step 1: Preparing Data
+
+Run the following script to download the dataset:
 
 ```bash
-python3 -m venv env               # Create a virtual environment
-source env/bin/activate           # Activate virtual environment
-pip install -r requirements.txt   # Install dependencies
-echo $PWD > env/lib/python3.5/site-packages/sgan.pth  # Add current directory to python path
-# Work for a while ...
-deactivate  # Exit virtual environment
+bash scripts/download_data.sh
 ```
 
-## Pretrained Models
-You can download pretrained models by running the script `bash scripts/download_models.sh`. This will download the following models:
+This will create the directory datasets/<dataset_name> with train/ val/ and test/ splits. All the datasets are pre-processed to be in world coordinates i.e. in meters. We support five datasets ETH, ZARA1, ZARA2, HOTEL and UNIV. We use leave-one-out approach, train on 4 sets and test on the remaining set. We observe the trajectory for 8 times steps (3.2 seconds) and show prediction results for 8 (3.2 seconds) and 12 (4.8 seconds) time steps.
 
-- `sgan-models/<dataset_name>_<pred_len>.pt`: Contains 10 pretrained models for all five datasets. These models correspond to SGAN-20V-20 in Table 1.
-- `sgan-p-models/<dataset_name>_<pred_len>.pt`: Contains 10 pretrained models for all five datasets. These models correspond to SGAN-20VP-20 in Table 1.
+## Training the Model
 
-Please refer to [Model Zoo](MODEL_ZOO.md) for results.
+Now you can train a new model by running the script:
+
+```bash
+python scripts/train.py
+```
+
+python scripts/train.py
+
+By default this will train a model on Zara1, periodically saving checkpoint files checkpoint_with_model.pt and checkpoint_no_model.pt to the current working directory. The training script has a number of command-line flags that you can use to configure the model architecture, hyperparameters, and input / output settings:
 
 ## Running Models
 You can use the script `scripts/evaluate_model.py` to easily run any of the pretrained models on any of the datsets. For example you can replicate the Table 1 results for all datasets for SGAN-20V-20 like this:
@@ -69,6 +59,4 @@ python scripts/evaluate_model.py \
   --model_path models/sgan-models
 ```
 
-## Training new models
-Instructions for training new models can be [found here](TRAINING.md).
 
