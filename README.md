@@ -12,8 +12,7 @@ Presented at [CVPR 2018](http://cvpr2018.thecvf.com/)
 
 
 ## Model
-i used old implementation of the paper as a reference for my implementation.  
-Social GAN model consists of three key components: Generator (G), Pooling Module (PM) and Discriminator (D). G is based on encoder-decoder framework where we link the hidden states of encoder and decoder via PM. G takes as input trajectories of all people involved in a scene and outputs corresponding predicted trajectories. D inputs the entire sequence comprising both input trajectory and future prediction and classifies them as “real/fake”.
+I used old implementation of the paper as a reference for my implementation. Social GAN model consists of three key components: Generator (G), Pooling Module (PM) and Discriminator (D). G is based on encoder-decoder framework where we link the hidden states of encoder and decoder via PM. G takes as input trajectories of all people involved in a scene and outputs corresponding predicted trajectories. D inputs the entire sequence comprising both input trajectory and future prediction and classifies them as “real/fake”.
 
 <div align='center'>
   <img src='images/model.png' width='1000px'>
